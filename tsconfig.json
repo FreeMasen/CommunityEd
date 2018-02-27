@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "outFile": "js/app.js",
+        "lib": [
+            "dom",
+            "es2015"
+        ],
+        "target": "es6"
+    }
+}
