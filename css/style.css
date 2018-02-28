@@ -4,6 +4,10 @@ html, body {
     padding: 0;
 }
 
+body > * {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     flex-flow: row;
@@ -11,10 +15,6 @@ body {
     align-items: flex-start;
     align-content: flex-start;
     margin: 0 10px;
-}
-
-body > * {
-    box-sizing: border-box;
 }
 
 #input {

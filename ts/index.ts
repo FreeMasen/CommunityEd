@@ -2,43 +2,55 @@ let app: App;
 window.addEventListener('DOMContentLoaded', ev => {
     console.log('DOMContentLoaded');
     app = new App();
-})
+});
+
 class App {
     constructor() {
         console.log('new App');
+        // this.updateHTMLDisplay();
+        this.refreshIframe(null);
         this.registerEvents();
     }
 
     registerEvents() {
         console.log('register events');
-        let html = this.getHTML();
-        html.addEventListener('change', ev => this.refreshIframe(ev));
+        let htmlDisplay = this.getHTMLDisplay();
+        let html = this.getHTMLInput();
+        // htmlDisplay.addEventListener('focus', ev => html.focus());
+        // html.addEventListener('keyup', ev => this.updateHTMLDisplay());
+
         let style = this.getStyle();
-        html.addEventListener('change', ev => this.refreshIframe(ev));
-        let iframe = this.getDisplay();
-        iframe.addEventListener('loadstart', ev => this.refreshIframe(ev));
     }
 
-    refreshIframe(ev: Event) {
+    // updateHTMLDisplay() {
+    //     let display = this.getHTMLDisplay();
+    //     let input = this.getHTMLInput()
+    //     display.innerHTML = input.innerHTML;
+    // }
+
+    refreshIframe(ev: number) {
         console.log('refreshIFrame', ev);
         let iframe = this.getDisplay();
-        while (iframe.contentDocument.body.hasChildNodes()) {
-            iframe.contentDocument.body.removeChild(iframe.contentDocument.firstChild);
-        }
-        let style = iframe.contentDocument.querySelector('style');
-        if (style) {
-            style.parentElement.removeChild(style);
-        }
+        if (iframe.hasChildNodes())
+            iframe.removeChild(iframe.firstChild);
         let newStyle = document.createElement('style') as HTMLStyleElement;
         let styleInput = this.getStyle();
         let styleText = document.createTextNode(styleInput.value);
         newStyle.appendChild(styleText);
-        let htmlInput = this.getHTML();
-        iframe.innerHTML = htmlInput.value;
+        let htmlInput = this.getHTMLInput();
+        let newDoc = new DOMParser().parseFromString(htmlInput.innerText.replace(/\n/g, '').replace(/>\s+</g, ''), 'text/html');
+        newDoc.head.appendChild(newStyle);
+        iframe.contentDocument.head.innerHTML = newDoc.head.innerHTML;
+        iframe.contentDocument.body.innerHTML = newDoc.body.innerHTML;
+        // setTimeout(ev => this.refreshIframe(ev), 500);
     }
 
-    getHTML(): HTMLTextAreaElement {
-        return document.getElementById('html') as HTMLTextAreaElement;
+    getHTMLDisplay(): HTMLElement {
+        return document.getElementById('html-code');
+    }
+
+    getHTMLInput(): HTMLDivElement {
+        return document.getElementById('html') as HTMLDivElement;
     }
 
     getStyle(): HTMLTextAreaElement {
@@ -49,5 +61,3 @@ class App {
         return document.getElementById('display') as HTMLIFrameElement;
     }
 }
-if (!app) app = new App();
-console.log('index.ts loaded');

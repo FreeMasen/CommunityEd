@@ -3,13 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/css/style.css" type="text\css" />
+        <link rel="stylesheet" href="css/style.css" type="text\css" />
+        <style>
+            #html {
+                min-width: 250px;
+                min-height: 500px;
+            }
+        </style>
     </head>
     <body>
         <form id="input">
             <div class="input-group">
                 <label for="html">HTML</label>
-                <textarea id="html" ></textarea>
+                <pre id="html" class="prettyprint lang-html" contenteditable="true" id="html-code"></pre>
             </div>
             <div class="input-group">
                 <label for="style">Style</label>
@@ -17,6 +23,6 @@
             </div>
         </form>
         <iframe id="display"></iframe>
-        <script type="text/javascript" src="/js/app.js" />
+        <script type="text/javascript" src="js/app.js" ></script>
     </body>
 </html>

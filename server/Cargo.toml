@@ -1,0 +1,8 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["FreeMasen"]
+
+[dependencies]
+pony = "0.1"
+hyper = "*"
